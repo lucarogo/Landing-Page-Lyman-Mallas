@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Slider 3 de 10</title>
+    <style>
+        /* ========== ESTILOS ÚNICOS DEL SLIDER ========== */
+
+        .mi-slider-seccion {
+            position: relative;      /* Para colocar los botones encima */
+            width: 1230px;           /* 3 cuadros de 400px cada uno + 10px de margen entre ellos (solo en pantallas grandes) */
+            height: 400px;           /* Fijo a 400px de alto */
+            margin: 0 auto;          /* Centrar horizontalmente */
+            overflow: hidden;        /* Ocultar lo que se sale del contenedor */
+        }
+
+        .mi-slider-wrapper {
+            display: flex; 
+            transition: transform 0.5s ease-in-out; /* Deslizamiento suave */
+            will-change: transform;                 /* Mejora de rendimiento */
+        }
+
+        /* Cada slide es un enlace */
+        .mi-slide {
+            min-width: 400px;               /* Cada cuadro mide 400px de ancho */
+            height: 400px;
+            background-size: cover;         /* La imagen de fondo ocupa todo */
+            background-position: center;
+            cursor: pointer;                /* Manito al pasar */
+            transition: transform 0.3s ease; /* Para el zoom al hover */
+            text-decoration: none;          /* Quita subrayado del enlace */
+            margin-right: 10px;             /* Separación de 10px entre cuadros */
+        }
+
+        /* Zoom al pasar el mouse */
+        .mi-slide:hover {
+            transform: scale(1.05);
+        }
+
+        /* Botones de navegación */
+        .mi-slider-boton {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            font-size: 2rem;
+            background: rgba(0,0,0,0.3);
+            color: #fff;
+            border: none;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+        }
+        .mi-slider-boton.mi-prev {
+            left: 10px;
+        }
+        .mi-slider-boton.mi-next {
+            right: 10px;
+        }
+
+        /* ========== RESPONSIVO PARA PANTALLAS PEQUEÑAS ========== */
+        @media (max-width: 900px) {
+            .mi-slider-seccion {
+                width: 100%;
+                height: auto;
+            }
+            .mi-slide {
+                min-width: 100%;
+                height: auto;
+                aspect-ratio: 1/1;  /* Para mantener forma cuadrada */
+                margin-right: 0;    /* Quitar margen en pantallas pequeñas */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mi-slider-seccion">
+        <!-- Botón anterior -->
+        <button class="mi-slider-boton mi-prev">&#10094;</button>
+        
+        <!-- Contenedor que "envuelve" los slides -->
+        <div class="mi-slider-wrapper" id="miSliderWrapper">
+            <!-- Se incluyen 10 slides. Cambia los enlaces e imágenes a tu gusto. -->
+            <a href="https://example.com/enlace1" class="mi-slide"
+                 style="background-image: url('/images/animales.jpg');"></a>
+            <a href="https://example.com/enlace2" class="mi-slide"
+                 style="background-image: url('/images/deporte.jpg');"></a>
+            <a href="https://example.com/enlace3" class="mi-slide"
+                 style="background-image: url('/images/animales.jpg');"></a>
+            <a href="https://example.com/enlace4" class="mi-slide"
+                 style="background-image: url('/images/animales.jpg');"></a>
+            <a href="https://example.com/enlace5" class="mi-slide"
+                 style="background-image: url('/images/animales.jpg');"></a>
+            <a href="https://example.com/enlace6" class="mi-slide"
+                 style="background-image: url('/images/animales.jpg');"></a>
+            <a href="https://example.com/enlace7" class="mi-slide"
+                 style="background-image: url('/images/animales.jpg');"></a>
+            <a href="https://example.com/enlace8" class="mi-slide"
+                 style="background-image: url('/images/animales.jpg');"></a>
+            <a href="https://example.com/enlace9" class="mi-slide"
+                 style="background-image: url('/images/animales.jpg');"></a>
+            <a href="https://example.com/enlace10" class="mi-slide"
+                 style="background-image: url('https://via.placeholder.com/400/aaa/fff?text=10');"></a>
+        </div>
+
+        <!-- Botón siguiente -->
+        <button class="mi-slider-boton mi-next">&#10095;</button>
+    </div>
+
+    <script>
+        // ==========================================
+        //       LÓGICA PARA SLIDER INFINITO
+        // ==========================================
+
+        const wrapper = document.getElementById('miSliderWrapper');
+        const slides = document.querySelectorAll('.mi-slide');
+        const totalSlides = slides.length;   // 10
+        let slidesVisibles = 3;              // Siempre se mostrarán 3 a la vez (en desktop)
+        let indiceActual = 0;                // Indica el "slide inicial" que se ve
+
+        // Detectar el tamaño de la pantalla y ajustar slidesVisibles
+        function ajustarSlidesVisibles() {
+            if (window.innerWidth <= 900) {
+                slidesVisibles = 1;
+            } else {
+                slidesVisibles = 3;
+            }
+        }
+
+        ajustarSlidesVisibles();
+        window.addEventListener('resize', ajustarSlidesVisibles);
+
+        // Para avanzar automáticamente cada 3 segundos
+        let autoSlide = setInterval(irAlSiguiente, 3000);
+
+        // Botones de navegación
+        document.querySelector('.mi-prev').addEventListener('click', () => {
+            clearInterval(autoSlide);   // Pausa el auto-slide
+            irAlAnterior();
+            autoSlide = setInterval(irAlSiguiente, 3000); // Reactiva
+        });
+        document.querySelector('.mi-next').addEventListener('click', () => {
+            clearInterval(autoSlide);
+            irAlSiguiente();
+            autoSlide = setInterval(irAlSiguiente, 3000);
+        });
+
+        function irAlSiguiente() {
+            indiceActual++;
+            // El último índice que permite ver los slides visibles
+            if (indiceActual > totalSlides - slidesVisibles) {
+                // Reinicia al primer grupo
+                indiceActual = 0;
+            }
+            actualizarSlider();
+        }
+
+        function irAlAnterior() {
+            indiceActual--;
+            if (indiceActual < 0) {
+                // Ir al último grupo
+                indiceActual = totalSlides - slidesVisibles; 
+            }
+            actualizarSlider();
+        }
+
+        function actualizarSlider() {
+            // Cada slide mide 400px de ancho + 10px de margen, así que movemos el wrapper
+            // - (indiceActual * 410) px en desktop y - (indiceActual * 100%) en móviles
+            const desplazamiento = window.innerWidth <= 900 ? indiceActual * 100 : indiceActual * 410;
+            wrapper.style.transform = window.innerWidth <= 900 ? `translateX(-${desplazamiento}%)` : `translateX(-${desplazamiento}px)`;
+        }
+    </script>
+
+</body>
+</html>

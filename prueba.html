@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sección de Productos</title>
+    <style>
+        .productos-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+            justify-content: center;
+            justify-items: center;
+        }
+
+        .producto {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .producto:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .whatsapp-icon {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .whatsapp-icon:hover {
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            .productos-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .productos-container {
+                grid-template-columns: 1fr;
+            }
+
+            .producto {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="productos-container">
+        <div class="producto" style="background-image: url('img1.jpg');">
+            <a href="https://wa.me/123456789" target="_blank">
+                <img src="whatsapp-icon.png" alt="WhatsApp" class="whatsapp-icon">
+            </a>
+        </div>
+        <div class="producto" style="background-image: url('img2.jpg');">
+            <a href="https://wa.me/123456789" target="_blank">
+                <img src="whatsapp-icon.png" alt="WhatsApp" class="whatsapp-icon">
+            </a>
+        </div>
+        <div class="producto" style="background-image: url('img3.jpg');">
+            <a href="https://wa.me/123456789" target="_blank">
+                <img src="whatsapp-icon.png" alt="WhatsApp" class="whatsapp-icon">
+            </a>
+        </div>
+        <div class="producto" style="background-image: url('img4.jpg');">
+            <a href="https://wa.me/123456789" target="_blank">
+                <img src="whatsapp-icon.png" alt="WhatsApp" class="whatsapp-icon">
+            </a>
+        </div>
+        <div class="producto" style="background-image: url('img5.jpg');">
+            <a href="https://wa.me/123456789" target="_blank">
+                <img src="whatsapp-icon.png" alt="WhatsApp" class="whatsapp-icon">
+            </a>
+        </div>
+        <div class="producto" style="background-image: url('img6.jpg');">
+            <a href="https://wa.me/123456789" target="_blank">
+                <img src="whatsapp-icon.png" alt="WhatsApp" class="whatsapp-icon">
+            </a>
+        </div>
+    </div>
+</body>
+</html>

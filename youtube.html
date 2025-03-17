@@ -1,0 +1,141 @@
+<section class="youtube-section">
+    <div class="youtube-header">
+      <h1>Bienvenido a Nuestro Canal</h1>
+      <!-- <h3>Disfruta de nuestro contenido variado</h3> -->
+    </div>
+    <div class="youtube-videos">
+      <div class="video-container" onmouseover="animateVideo(this)" onmouseout="resetAnimation(this)">
+        <iframe width="356" height="634" src="https://www.youtube.com/embed/P8qn11MdMcc" title="🔹🏗️ ¡Conoce a Lyman Mallas – Expertos en Protección y Seguridad!" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>      </div>
+      <div class="video-container" onmouseover="animateVideo(this)" onmouseout="resetAnimation(this)">
+        <iframe width="356" height="634" src="https://www.youtube.com/embed/9uowBW84IwI" title="⚽🏟️ ¡Mallas para Arcos de Fútbol y Campos Deportivos – Calidad y Resistencia!" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+      <div class="video-container" onmouseover="animateVideo(this)" onmouseout="resetAnimation(this)">
+        <iframe width="356" height="634" src="https://www.youtube.com/embed/R7CLtQwLCII" title="🏗️🔩 ¡Mallas Metálicas de Lyman Mallas – Resistencia y Seguridad!" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+    </div>
+    <div class="youtube-footer">
+      <a href="https://www.youtube.com/channel/YOUR_CHANNEL_ID" target="_blank" class="youtube-button" onmouseover="jumpButton(this)" onmouseout="stopJump(this)">
+        <img src="https://img.icons8.com/color/48/000000/youtube-play.png" alt="YouTube" />
+        Visita nuestro canal
+      </a>
+    </div>
+</section>
+  
+  <style>
+  .youtube-section {
+    text-align: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-image: url('/images/fondoyoutube2.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: rgb(0, 0, 0); /* Asegura que el texto sea legible sobre la imagen */
+}
+  .youtube-header h1 {
+    font-size: 70px;
+  }
+  .youtube-header h3 {
+    font-size: 18px;
+  }
+  .youtube-videos {
+    display: flex;
+    justify-content: center;
+    gap: 70px;
+    flex-wrap: wrap;
+  }
+  .video-container {
+    width: 100%;
+    max-width: 356px;
+    transition: transform 0.3s ease-in-out;
+    z-index: 2;
+  }
+  .video-container:hover {
+    transform: scale(1.1);
+  }
+  .youtube-footer {
+    margin-top: 20px;
+  }
+  .youtube-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #FF0000;
+    color: #FFF;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    position: relative;
+    overflow: visible;
+    z-index: 5;
+  }
+  .youtube-button img {
+    margin-right: 10px;
+  }
+  .sparkle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: yellow;
+    border-radius: 50%;
+    opacity: 0;
+    animation: sparkle-animation 0.5s linear forwards;
+  }
+  @keyframes sparkle-animation {
+    0% {
+      opacity: 1;
+      transform: translate(0, 0) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(calc(-30px + 60px * var(--random-x)), calc(-30px + 60px * var(--random-y))) scale(0.5);
+    }
+  }
+  @keyframes jump {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+
+  @media (max-width: 600px) {
+    .youtube-section {
+    text-align: center;
+    padding: 0px;
+    font-family: Arial, sans-serif;
+    background-image: url('/images/fondomovilyt.png')!important;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: rgb(0, 0, 0); /* Asegura que el texto sea legible sobre la imagen */
+}
+
+  }
+  </style>
+  
+  <script>
+  function animateVideo(element) {
+    element.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3)';
+  }
+  function resetAnimation(element) {
+    element.style.boxShadow = 'none';
+  }
+  function jumpButton(button) {
+    button.style.animation = 'jump 0.5s ease-in-out infinite';
+    createSparkles(button);
+  }
+  function stopJump(button) {
+    button.style.animation = 'none';
+  }
+  function createSparkles(button) {
+    for (let i = 0; i < 10; i++) {
+      const sparkle = document.createElement('div');
+      sparkle.classList.add('sparkle');
+      sparkle.style.setProperty('--random-x', Math.random());
+      sparkle.style.setProperty('--random-y', Math.random());
+      sparkle.style.left = `${Math.random() * 100}%`;
+      sparkle.style.top = `${Math.random() * 100}%`;
+      button.appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 500);
+    }
+  }
+  </script>
+  
